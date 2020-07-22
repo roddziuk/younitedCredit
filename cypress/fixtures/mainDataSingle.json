@@ -1,5 +1,8 @@
-{
-    "mainUrl": "https://www.younited-credit.com/",
+{   
+    "projectSelect" : "NEWCAR",
+    "amount" : "2K",
+    "creditMaturity" : "M12",
+    "emailInput": "calypsoatlas63@gmail.com",
     "maritalStatus" : "SINGLE", 
     "childNumber" : "0", 
     "housingStatus" : "TENANT", 
@@ -21,7 +24,8 @@
     "gender" : "#GENDERCODE_M",
     "lastName": "Kubrick" ,
     "firstName": "Tarantino", 
-    "dateOfBirthDay": "12", 
+    "dateOfBirthDay": "02", 
     "dateOfBirthMonth": "10", 
+    "dateOfBirthYear": "1980",
     "postalCode": "33000"
 }

@@ -1,23 +1,15 @@
 context('Consumer is single',() => {
 
-  cy.fixture('mainData.json').as('mainData')
+let mainDataSingle = require('../fixtures/mainDataSingle')
 
-  before(() => {
+before(() => {
     cy.visit('https://www.younited-credit.com/')
     cy.title()
         .should('include','Le Crédit')
 })
 
 it('Choose the project for credit',() => {
-    cy.get('#projectSelect')
-        .select('NEWCAR')
-        .should('contain','Véhicule neuf')
-    cy.get('#amount')
-        .select('2K')
-        .should('contain','2000 €')
-    cy.get('#creditMaturity')
-        .select('M12')
-        .should('contain','12 mois')
+    cy.projectPage(mainDataSingle.projectSelect, mainDataSingle.amount, mainDataSingle.creditMaturity)
     cy.get('[data-di-id=di-id-bca9a80c-4fc29f73]')
         .click()
     cy.url()
@@ -26,10 +18,8 @@ it('Choose the project for credit',() => {
         .should('contain', 'Découvrez votre offre de prêt de')
 })
 
-it('Email info page',() => {      
-    cy.get('#email-input')  
-        .type('calypsoatlas63@gmail.com')
-        .should('have.value', 'calypsoatlas63@gmail.com')
+it('Email info page',() => {     
+    cy.emailConsumer(mainDataSingle.emailInput)
     cy.wait(2000)
     cy.get('[data-di-id="di-id-8c30ab93-a687b9f3"]')
         .click()
@@ -40,12 +30,7 @@ it('Email info page',() => {
 })
 
 it('Marital Status',() => {
-    cy.get('#maritalStatus-input')
-        .select('SINGLE')
-        .should('contain','Célibataire')
-    cy.get('#childNumberPropal-input')
-        .select('0')
-        .should('contain','0')
+    cy.maritalStatusConsumer(mainDataSingle.maritalStatus, mainDataSingle.childNumber)
     cy.get('[type="checkbox"]')
         .check({ force: true })
         .should('be.checked') 
@@ -58,15 +43,7 @@ it('Marital Status',() => {
 })
 
 it('Housing Status',() => {
-    cy.get('#housingStatus-input')
-        .select('TENANT')
-        .should('contain','Locataire', {timeout: 1000})
-    cy.get('#housingStatusFrom-input-month')
-        .type('01')
-        .should('have.value', '01')
-    cy.get('#housingStatusFrom-input-year')
-        .type('2020')
-        .should('have.value', '2020')
+    cy.housingStatusConsumer(mainDataSingle.housingStatus, mainDataSingle.housingStatusFromMonth,mainDataSingle.housingStatusFromYear)
     cy.get('[type="checkbox"]')
         .uncheck({ force: true })
     cy.get('[data-test="navigator-compact-forward"]')
@@ -78,18 +55,7 @@ it('Housing Status',() => {
 })
 
 it('Activity Sector',() => {
-    cy.get('#activitySector-input')
-        .select('INDEPENDENT')
-        .should('contain','Indépendants / Travailleurs non salariés')
-    cy.get('#profession-input')
-        .select('AUTO_ENTREPRENEUR')
-        .should('contain','Auto-Entrepreneur')
-    cy.get('#businessActivityStartDate-input-month')
-        .type('02')
-        .should('have.value', '02')
-    cy.get('#businessActivityStartDate-input-year')
-        .type('2019')
-        .should('have.value', '2019')
+    cy.activityConsumer(mainDataSingle.activitySector, mainDataSingle.profession, mainDataSingle.businessActivityStartDateMonth, mainDataSingle.businessActivityStartDateYear)
     cy.get('[data-di-id="di-id-d838032c-320c79b9"]')
         .click()
     cy.get('[data-test="navigator-compact-forward"]')
@@ -101,15 +67,7 @@ it('Activity Sector',() => {
 })
 
 it('Incomes',() => {
-    cy.get('#mainIncome-input')
-        .type('2000')
-        .should('have.value', '2000')
-    cy.get('#housingAssistance-input')
-        .type('0')
-        .should('have.value', '0')
-    cy.get('#additionalIncome-input')
-        .type('0')
-        .should('have.value', '0')
+    cy.incomConsumer(mainDataSingle.mainIncome, mainDataSingle.housingAssistance, mainDataSingle.additionalIncome)
     cy.get('[data-test="navigator-compact-forward"]')
         .click()
     cy.url()
@@ -119,20 +77,7 @@ it('Incomes',() => {
 })
 
 it('Outcomes',() => {
-    cy.get("h2")
-        .should('contain','Vos charges mensuelles')
-    cy.get('#rentAmount-input')
-        .type('500')
-        .should('have.value', '500')
-    cy.get('#loanCount-input')
-        .select('1')
-        .should('contain','1')
-    cy.get('#type-input')
-        .select('PERSONAL_LOAN')
-        .should('contain','Prêt Personnel')
-    cy.get('#loanAmount-input')
-        .type('20')
-        .should('have.value', '20')
+    cy.outcomeConsumer(mainDataSingle.rentAmount, mainDataSingle.loanCount, mainDataSingle.type,mainDataSingle.loanAmount)
     cy.get('[data-test="navigator-compact-forward"]')
         .click()
     cy.url()
@@ -142,12 +87,7 @@ it('Outcomes',() => {
 })
 
 it('Bank',() => {
-    cy.get('#bankCode-input')
-        .select('HSBC')
-        .should('contain','HSBC')
-    cy.get('#bankFrom-input-year')
-        .type('2010')
-        .should('have.value', '2010')
+    cy.bankConsumer(mainDataSingle.bankCode, mainDataSingle.bankFromYear)
     cy.get('[data-test=navigator-compact-forward]')
         .click()
     cy.url()
@@ -157,23 +97,6 @@ it('Bank',() => {
 })
 
   after(() => {
-    cy.get('#GENDERCODE_M')
-        .check({ force: true })
-        .should('be.checked')
-    cy.get('#lastName-input')
-        .type('Kubrick')
-        .should('have.value', 'Kubrick')
-    cy.get('#firstName-input')
-        .type('Tarantino')
-        .should('have.value', 'Tarantino')
-    cy.get('#dateOfBirth-input-day')
-        .type('02')
-        .should('have.value', '02')
-    cy.get('#dateOfBirth-input-month')
-        .type('10')
-        .should('have.value', '10')
-    cy.get('#postalCode-input')
-        .type('33000')
-        .should('have.value', '33000')
+    cy.personalInfoConsumer(mainDataSingle.gender, mainDataSingle.lastName, mainDataSingle.firstName, mainDataSingle.dateOfBirthDay, mainDataSingle.dateOfBirthMonth, mainDataSingle.dateOfBirthYear, mainDataSingle.postalCode)
   })
 })
